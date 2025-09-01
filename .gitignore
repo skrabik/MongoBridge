@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Packaging
+build/
+dist/
+.eggs/
+*.egg-info/
+
+# Tests / coverage
+.tox/
+.nox/
+.pytest_cache/
+.coverage*
+htmlcov/
+
+# Type checkers
+.mypy_cache/
+.pytype/
+.pyre/
+.ruff_cache/
+
+# Virtual envs
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Logs
+*.log
+
+# Cache
+.cache/
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+certs/
+
+# Docs
+docs/_build/
+
+# Docker
+# Use .dockerignore for build context
