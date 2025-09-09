@@ -5,8 +5,8 @@ services:
     build: .
     container_name: restfastapi-mongo-api
     env_file: .env
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     volumes:
       - ./certs/mongodb-cert.key:/app/mongodb-cert.key:ro
       - ./certs/mongodb.pem:/app/mongodb.pem:ro
