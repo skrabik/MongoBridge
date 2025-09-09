@@ -6,13 +6,14 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from motor.motor_asyncio import AsyncIOMotorCollection
 
 from app.db import getCollection
-from app.models.record import RecordCreate, RecordUpdate, RecordOut
+from app.models.record import RecordCreate, RecordUpdate, RecordOut, RecordPayloadAdd
 from app.repositories.records import (
     createRecord,
     getRecord,
     listRecords,
     updateRecord,
     deleteRecord,
+    addToRecordPayload,
 )
 
 
@@ -60,4 +61,12 @@ async def deleteRecordRoute(record_id: str, col: AsyncIOMotorCollection = Depend
     if not ok:
         raise HTTPException(status_code=404, detail="Record not found")
     return {"status": "deleted"}
+
+
+@router.patch("/records/{record_id}/payload", response_model=RecordOut)
+async def addToPayloadRoute(record_id: str, body: RecordPayloadAdd, col: AsyncIOMotorCollection = Depends(collectionDep)):
+    rec = await addToRecordPayload(col, record_id, body.payload)
+    if not rec:
+        raise HTTPException(status_code=404, detail="Record not found")
+    return rec
 

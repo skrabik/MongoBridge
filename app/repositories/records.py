@@ -49,3 +49,16 @@ async def deleteRecord(col: AsyncIOMotorCollection, record_id: str) -> bool:
     res = await col.delete_one({"_id": ObjectId(record_id)})
     return res.deleted_count == 1
 
+
+async def addToRecordPayload(col: AsyncIOMotorCollection, record_id: str, payload_patch: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    now = datetime.now(timezone.utc)
+    # Сливаем словари на верхнем уровне: существующий payload ∪ payload_patch
+    # Используем оператор $set для поэлементного обновления ключей payload.
+    set_update: Dict[str, Any] = {f"payload.{k}": v for k, v in payload_patch.items()}
+    set_update["updated_at"] = now
+    res = await col.find_one_and_update(
+        {"_id": ObjectId(record_id)},
+        {"$set": set_update},
+        return_document=ReturnDocument.AFTER,
+    )
+    return _serialize(res) if res else None

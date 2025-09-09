@@ -14,6 +14,10 @@ class RecordUpdate(BaseModel):
     payload: Optional[Dict[str, Any]] = None
 
 
+class RecordPayloadAdd(BaseModel):
+    payload: Dict[str, Any]
+
+
 class RecordOut(BaseModel):
     id: str
     payload: Dict[str, Any]
