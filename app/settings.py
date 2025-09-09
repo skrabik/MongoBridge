@@ -15,6 +15,8 @@ class AppSettings(BaseSettings):
     app_port: int = 8000
     log_level: str = "info"
 
+    api_key: str | None = None
+
 
 @lru_cache()
 def getSettings() -> AppSettings:
