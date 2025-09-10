@@ -9,7 +9,6 @@ class AppSettings(BaseSettings):
         "mongodb://localhost:27017"
     )
     mongodb_db: str = "app"
-    mongodb_collection: str = "records"
     mongodb_users_collection: str = "users"
 
     app_host: str = "0.0.0.0"

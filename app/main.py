@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Depends, HTTPException
-from app.routers.records import router as records_router
 from app.routers.users import router as users_router
 from app.settings import getSettings
 from fastapi.security import APIKeyHeader
@@ -19,12 +18,6 @@ async def apiKeyDep(api_key: str | None = Depends(api_key_header)) -> None:
 def createApp() -> FastAPI:
     settings = getSettings()
     application = FastAPI(title="REST FastAPI MongoDB Service")
-    application.include_router(
-        records_router,
-        prefix="/api/v1",
-        tags=["records"],
-        dependencies=[Depends(apiKeyDep)],
-    )
     application.include_router(
         users_router,
         prefix="/api/v1",
