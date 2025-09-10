@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
 
 from motor.motor_asyncio import AsyncIOMotorCollection
 from pymongo import ReturnDocument
@@ -46,5 +46,10 @@ async def mergeUserData(col: AsyncIOMotorCollection, conversation_id: str, data_
 async def getUserData(col: AsyncIOMotorCollection, conversation_id: str) -> Optional[Dict[str, Any]]:
     doc = await col.find_one({"conversation_id": conversation_id})
     return _serialize_user(doc) if doc else None
+
+
+async def listUsersData(col: AsyncIOMotorCollection, skip: int = 0, limit: int = 50) -> List[Dict[str, Any]]:
+    cursor = col.find({}, sort=[("_id", -1)]).skip(skip).limit(limit)
+    return [_serialize_user(doc) async for doc in cursor]
 
 
