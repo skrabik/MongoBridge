@@ -24,3 +24,18 @@ class RecordOut(BaseModel):
     created_at: datetime
     updated_at: datetime
 
+
+class UserDataCreate(BaseModel):
+    conversation_id: str
+    data: Dict[str, Any] = Field(default_factory=dict)
+
+
+class UserDataPatch(BaseModel):
+    data: Dict[str, Any]
+
+
+class UserDataOut(BaseModel):
+    conversation_id: str
+    data: Dict[str, Any]
+    created_at: datetime
+    updated_at: datetime

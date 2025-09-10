@@ -32,3 +32,7 @@ def getCollection() -> AsyncIOMotorCollection:
 def objectIdFromStr(value: str) -> ObjectId:
     return ObjectId(value)
 
+
+def getUsersCollection() -> AsyncIOMotorCollection:
+    settings = getSettings()
+    return getDatabase()[settings.mongodb_users_collection]

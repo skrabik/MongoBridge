@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 from app.routers.records import router as records_router
+from app.routers.users import router as users_router
 from app.settings import getSettings
 from fastapi.security import APIKeyHeader
 
@@ -22,6 +23,12 @@ def createApp() -> FastAPI:
         records_router,
         prefix="/api/v1",
         tags=["records"],
+        dependencies=[Depends(apiKeyDep)],
+    )
+    application.include_router(
+        users_router,
+        prefix="/api/v1",
+        tags=["users"],
         dependencies=[Depends(apiKeyDep)],
     )
     return application
